@@ -31,23 +31,23 @@ const server = http.createServer((req, res) => {
     const filesDefences = req.url.match(/\.js|\.css|\.jpg|\.png|\.gif|\.min.js|\.min.css|\.svg|\.ico/);
 
     if (filesDefences) {
-        console.log(filesDefences)
+        // console.log(filesDefences)
         let filePath = filesDefences[0].toString()
         let extension = mimeTypes[filesDefences[0].toString().split('.')[1]];
         console.log(filePath)
         if (filePath.includes('min.css')){
-            console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
+            // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
             extension = mimeTypes[filesDefences[0].toString().slice(1,filesDefences[0].toString().length)]
         }
         if (filePath.includes('min.js')){
-            console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
+            // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
             extension = mimeTypes[filesDefences[0].toString().slice(1,filesDefences[0].toString().length)]
         }
         if (filePath.includes('.ico')){
-            console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
+            // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
             extension = mimeTypes[filesDefences[0].toString().slice(1,filesDefences[0].toString().length)]
-            console.log(extension)
-            console.log(req.url);
+            // console.log(extension)
+            // console.log(req.url);
         }
 
         res.writeHead(200, { 'Content-Type': extension });
@@ -77,12 +77,30 @@ const server = http.createServer((req, res) => {
             break;
         }
         case '/createAdmin': {
-            authController.showFormCreateAdmin(req, res);
+            if (method === 'GET') {
+                authController.showFormCreateAdmin(req, res);
+            }
+            else {
+                authController.createAdmin(req, res);
+            }
+
             break;
         }
         case '/edit': {
             console.log(1)
-             authController.editAdmin(req, res.idUpdate);
+             authController.editAdmin(req, res);
+                break
+        }
+        case '/admin/delete': {
+            let id = qs.parse(urlParse.query);
+            let  idDelete = id.index
+            console.log(idDelete)
+            authController.deleteAdmin(req,res,idDelete).catch();
+            break;
+        }
+        case '/admin/search': {
+            authController.searchAdmin(req, res).catch();
+            break;
         }
 
     }

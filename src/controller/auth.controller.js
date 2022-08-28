@@ -1,7 +1,9 @@
 const fs = require("fs");
 const qs = require('qs');
-const  UserModel = require('../model/user.model')
 const cookie = require('cookie');
+const url = require('url')
+const  UserModel = require('../model/user.model')
+
 
 class  AuthController{
     UserModel;
@@ -25,9 +27,7 @@ class  AuthController{
         })
     }
     showListAdmin(req, res) {
-        const editButton = (obj) => {
-            return `<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap" onclick='getData(${obj})'>Edit</button>`
-        }
+        const editButton = this.editBtn();
 
         fs.readFile('./views/template/table.html', 'utf8', async (err, data) => {
             if (err) {
@@ -43,7 +43,7 @@ class  AuthController{
                     html += `<td>${element.email}</td>`;
                     html += `<td>${element.password}</td>`;
                     html += `<td>${editButton(JSON.stringify(element))}</td>`;
-                    html += `<td><a onclick="return confirm('Are you sure?')" href="/delete?index=${id}" class ="btn btn-danger">DELETE</a></td>`;
+                    html += `<td><a onclick="return confirm('Are you sure?')" href="/admin/delete?index=${element.id}" class ="btn btn-danger">DELETE</a></td>`;
                   });
                 data = data.replace('{list-users}', html);
                 res.writeHead(200, {'Content-Type': 'text/html'});
@@ -52,6 +52,14 @@ class  AuthController{
             }
         })
     };
+
+    editBtn() {
+        const editButton = (obj) => {
+            return `<button style="background-color: rgba(52,124,255,0.93);border: #007bff" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap" onclick='getData(${obj})'>EDIT</button>`;
+        }
+        return editButton;
+    }
+
     showFormCreateAdmin(req, res) {
         fs.readFile('./views/template/form.html', 'utf8', (err, data) => {
             res.writeHead(200, { 'Content-Type': 'text/html'});
@@ -59,8 +67,20 @@ class  AuthController{
             res.end();
         })
     };
+    createAdmin(req, res){
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk;
+        });
+        req.on('end', async () => {
+            let admin = qs.parse(data);
+            await this.UserModel.createNewAdmin(admin);
+            res.writeHead(301, {'location': '/table'});
+            return res.end();
+        });
+     }
 
-    editAdmin(req, res, idUpdate){
+    editAdmin(req, res){
         console.log(99)
         let inputData = ''
         req.on('data', chunk => {
@@ -70,11 +90,52 @@ class  AuthController{
             let newAdmin = qs.parse(inputData);
             if (newAdmin.id) {
                 console.log(newAdmin)
-                await this.UserModel.insertAdmin(newAdmin);
+                await this.UserModel.UpdateAdmin(newAdmin);
                 this.showListAdmin(req, res)
             }
         })
+    };
+    async deleteAdmin(req, res, idDelete) {
+        await this.UserModel.deleteAdminById(idDelete);
+        res.writeHead(301,{Location: '/table'});
+        res.end();
     }
+
+    async searchAdmin(req, res) {
+        let keyword = qs.parse(url.parse(req.url).query).keyword;
+        let admin = await this.UserModel.findByName(keyword);
+        console.log(admin)
+        const editButton = this.editBtn();
+        let html = '';
+        if (admin.length > 0) {
+            admin.map((element, index) => {
+                let id = element.id;
+                html += `<tr>`;
+                html += `<td>${index + 1}</td>`;
+                html += `<td>${element.name}</td>`;
+                html += `<td>${element.email}</td>`;
+                html += `<td>${element.password}</td>`;
+                html += `<td>${editButton(JSON.stringify(element))}</td>`;
+                html += `<td><a onclick="return confirm('Are you sure?')" href="/admin/delete?index=${element.id}" class ="btn btn-danger">Delete</a></td>`;
+            });
+        }
+        else {
+            html += "<tr>";
+            html += `<td colspan="4" class="text-center">Không có dữ liệu</td>`;
+            html += "</tr>";
+        }
+        fs.readFile('./views/template/table.html', 'utf8', ((err, data) =>  {
+            if (err) {
+                console.log(err.message);
+            }
+            data = data.replace('{list-users}', html)
+            data = data.replace('<input style="background: white"; type="text" name="keyword" placeholder="Enter your name" class="form-control">', `<input style="background: white"; type="text" name="keyword" value="${keyword}" placeholder="Enter your name" class="form-control">`)
+            res.writeHead(200, {'Content-Type': 'text/html'})
+            res.write(data);
+            res.end();
+        }))
+    };
+
 
     showFormLogin(req,res){
         //lay cookie tu header req

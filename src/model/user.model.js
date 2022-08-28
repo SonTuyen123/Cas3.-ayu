@@ -13,11 +13,22 @@ class UserModel extends BaseModel {
         return await this.querySQL(sql);
     }
 
-    async insertAdmin(newAdmin) {
-        let sqlInsert = `INSERT INTO users (name, email, password) VALUES ('${newAdmin.name}', '${newAdmin.email}', '${newAdmin.password}');`;
-
+    async UpdateAdmin(newAdmin) {
+        let sqlInsert = `UPDATE users SET name ='${newAdmin.name}', email= '${newAdmin.email}',password = '${newAdmin.password}' WHERE id=${Number(newAdmin.id)}`;
         return await this.querySQL(sqlInsert);
 
+    }
+    async deleteAdminById(idDelete) {
+        let sql = `delete from users where id = ${idDelete}`;
+        return await this.querySQL(sql);
+    }
+    async createNewAdmin(admin) {
+        let sql = `insert into users(name, email, password) VALUES ('${admin.name}', '${admin.email}', '${admin.password}')`;
+        return await this.querySQL(sql);
+    }
+    async findByName(name) {
+        const sql = `SELECT * FROM users WHERE name LIKE '%${name}%'`;
+        return await this.querySQL(sql)
     }
 }
 module.exports = UserModel;
