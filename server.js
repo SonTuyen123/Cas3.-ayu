@@ -29,83 +29,71 @@ const server = http.createServer((req, res) => {
     let urlPath = urlParse.pathname;
     let method = req.method;
     const filesDefences = req.url.match(/\.js|\.css|\.jpg|\.png|\.gif|\.min.js|\.min.css|\.svg|\.ico/);
-
+    console.log(filesDefences)
     if (filesDefences) {
         // console.log(filesDefences)
         let filePath = filesDefences[0].toString()
         let extension = mimeTypes[filesDefences[0].toString().split('.')[1]];
         console.log(filePath)
-        if (filePath.includes('min.css')){
-            // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
-            extension = mimeTypes[filesDefences[0].toString().slice(1,filesDefences[0].toString().length)]
+        if (filePath.includes('min.css')) {
+            // console.log(filesDefences[0].toString().slice(1, filesDefences[0].toString().length));
+            extension = mimeTypes[filesDefences[0].toString().slice(1, filesDefences[0].toString().length)]
         }
-        if (filePath.includes('min.js')){
+        if (filePath.includes('min.js')) {
             // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
-            extension = mimeTypes[filesDefences[0].toString().slice(1,filesDefences[0].toString().length)]
+            extension = mimeTypes[filesDefences[0].toString().slice(1, filesDefences[0].toString().length)]
         }
-        if (filePath.includes('.ico')){
+        if (filePath.includes('.ico')) {
             // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
-            extension = mimeTypes[filesDefences[0].toString().slice(1,filesDefences[0].toString().length)]
+            extension = mimeTypes[filesDefences[0].toString().slice(1, filesDefences[0].toString().length)]
             // console.log(extension)
             // console.log(req.url);
         }
 
-        res.writeHead(200, { 'Content-Type': extension });
+        res.writeHead(200, {'Content-Type': extension});
         fs.createReadStream(__dirname + "/views/template/" + req.url).pipe(res);
     }
 
     switch (urlPath) {
-        case '/': {
+        case '/':
             authController.showHomePage(req, res)
             break;
-        }
-        case '/login': {
+        case '/login':
             if (method === 'GET') {
                 authController.showFormLogin(req, res)
-            }
-           else {
+            } else {
                 authController.login(req, res)
             }
             break;
-        }
-        case '/admin': {
+        case '/admin':
             authController.showFormAdmin(req, res);
             break;
-        }
-        case '/table': {
+        case '/table':
             authController.showListAdmin(req, res);
             break;
-        }
-        case '/createAdmin': {
+        case '/createAdmin':
             if (method === 'GET') {
                 authController.showFormCreateAdmin(req, res);
-            }
-            else {
+            } else {
                 authController.createAdmin(req, res);
             }
-
             break;
-        }
-        case '/edit': {
+        case '/edit':
             console.log(1)
-             authController.editAdmin(req, res);
-                break
-        }
-        case '/admin/delete': {
+            authController.editAdmin(req, res);
+            break
+        case '/admin/delete':
             let id = qs.parse(urlParse.query);
-            let  idDelete = id.index
+            let idDelete = id.index
             console.log(idDelete)
-            authController.deleteAdmin(req,res,idDelete).catch();
+            authController.deleteAdmin(req, res, idDelete).catch();
             break;
-        }
-        case '/admin/search': {
+        case '/search':
             authController.searchAdmin(req, res).catch();
             break;
-        }
-
     }
 });
-server.listen(port,()=> {
+server.listen(port, () => {
     console.log(`http://localhost:${port}`);
 });
 
