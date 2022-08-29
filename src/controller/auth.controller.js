@@ -14,6 +14,7 @@ class  AuthController{
 
     showHomePage(req, res){
         fs.readFile('./views/template/index.html', 'utf8', (err, data) => {
+            res.setHeader('Cache-Control', 'no-store');
             res.writeHead(200, { 'Content-Type': 'text/html'});
             res.write(data);
             res.end();
@@ -21,6 +22,7 @@ class  AuthController{
     }
     showFormAdmin(req, res) {
         fs.readFile('./views/template/admin.html', 'utf8', (err, data) => {
+            res.setHeader('Cache-Control', 'no-store');
             res.writeHead(200, { 'Content-Type': 'text/html'});
             res.write(data);
             res.end();
@@ -46,6 +48,7 @@ class  AuthController{
                     html += `<td><a onclick="return confirm('Are you sure?')" href="/admin/delete?index=${element.id}" class ="btn btn-danger">DELETE</a></td>`;
                   });
                 data = data.replace('{list-users}', html);
+                res.setHeader('Cache-Control', 'no-store');
                 res.writeHead(200, {'Content-Type': 'text/html'});
                 res.write(data);
                 res.end();
@@ -62,11 +65,13 @@ class  AuthController{
 
     showFormCreateAdmin(req, res) {
         fs.readFile('./views/template/form.html', 'utf8', (err, data) => {
+            res.setHeader('Cache-Control', 'no-store');
             res.writeHead(200, { 'Content-Type': 'text/html'});
             res.write(data);
             res.end();
         })
     };
+
     createAdmin(req, res){
         let data = '';
         req.on('data', chunk => {
@@ -75,6 +80,7 @@ class  AuthController{
         req.on('end', async () => {
             let admin = qs.parse(data);
             await this.UserModel.createNewAdmin(admin);
+            res.setHeader('Cache-Control', 'no-store');
             res.writeHead(301, {'location': '/table'});
             return res.end();
         });
@@ -97,6 +103,7 @@ class  AuthController{
     };
     async deleteAdmin(req, res, idDelete) {
         await this.UserModel.deleteAdminById(idDelete);
+        res.setHeader('Cache-Control', 'no-store');
         res.writeHead(301,{Location: '/table'});
         res.end();
     }
@@ -104,7 +111,7 @@ class  AuthController{
     async searchAdmin(req, res) {
         let keyword = qs.parse(url.parse(req.url).query).keyword;
         let admin = await this.UserModel.findByName(keyword);
-        console.log(admin)
+        // console.log(admin)
         const editButton = this.editBtn();
         let html = '';
         if (admin.length > 0) {
@@ -130,19 +137,19 @@ class  AuthController{
             }
             data = data.replace('{list-users}', html)
             data = data.replace('<input style="background: white"; type="text" name="keyword" placeholder="Enter your name" class="form-control">', `<input style="background: white"; type="text" name="keyword" value="${keyword}" placeholder="Enter your name" class="form-control">`)
+            res.setHeader('Cache-Control', 'no-store');
             res.writeHead(200, {'Content-Type': 'text/html'})
             res.write(data);
             res.end();
         }))
     };
-
-
     showFormLogin(req,res){
         //lay cookie tu header req
         let cookieUserLogin = {
             email: '',
             password: ''
         }
+        console.log(req.headers.cookie)
         if(req.headers.cookie){
             let cookies = cookie.parse(req.headers.cookie);
             if (cookies && cookies.user){
@@ -152,6 +159,7 @@ class  AuthController{
         fs.readFile('./views/template/login.html', 'utf8', (err, data) => {
             data = data.replace('{email}', cookieUserLogin.email);
             data = data.replace('{password}', cookieUserLogin.password);
+            res.setHeader('Cache-Control', 'no-store');
             res.writeHead(200, { 'Content-Type': 'text/html'});
             res.write(data);
             res.end();
@@ -166,32 +174,43 @@ class  AuthController{
             let result = await this.UserModel.findUser(dataForm)
             console.log(dataForm)
             console.log(result)
-            //tao cookie
-            const setCookie = cookie.serialize('user',JSON.stringify(dataForm));
             //tao session
             let sessionLogin = {
                 email: dataForm.email,
                 password: dataForm.password
             }
             //ghi session vào file
-            let nameFile = Date.now()
-            let dataSession = JSON.stringify(sessionLogin)
-
-            //gui cookie ve cho trinh duyet
-            res.setHeader('Set-Cookie',setCookie);
+            let nameFile = Date.now();
+            let dataSession = JSON.stringify(sessionLogin);
 
             if (result.length > 0) {
-                fs.writeFileSync('./session/' + nameFile + '.txt', dataSession)
+                //tao cookie
+                let dataCookie = {
+                    email: dataForm.email,
+                    password: dataForm.password,
+                    sessionId: nameFile
+                }
+                const setCookie = cookie.serialize('user',JSON.stringify(dataCookie));
+
+                //gui cookie ve cho trinh duyet
+                res.setHeader('Set-Cookie',setCookie);
+
+                fs.writeFileSync('./session/' + nameFile + '.txt', dataSession);
+                res.setHeader('Cache-Control', 'no-store');
                 res.writeHead(301, {'Location': '/admin'});
                 res.end()
             }else {
+                let dataCookie = {
+                    email: dataForm.email,
+                    password: dataForm.password
+                }
+                const setCookie = cookie.serialize('user',JSON.stringify(dataCookie));
+                res.setHeader('Set-Cookie',setCookie);
+                res.setHeader('Cache-Control', 'no-store');
                 res.writeHead(301, {'Location': '/login'});
                 res.end();
             }
-
         })
     }
-
-
 }
 module.exports = AuthController;

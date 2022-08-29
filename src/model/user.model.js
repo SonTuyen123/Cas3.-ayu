@@ -7,7 +7,6 @@ class UserModel extends BaseModel {
                                 AND password = '${data.password}'`;
         return await this.querySQL(sql);
     }
-
     async getAdmin() {
         const sql = 'select * from users';
         return await this.querySQL(sql);
