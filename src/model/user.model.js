@@ -13,7 +13,7 @@ class UserModel extends BaseModel {
     }
 
     async UpdateAdmin(newAdmin) {
-        let sqlInsert = `UPDATE users SET name ='${newAdmin.name}', email= '${newAdmin.email}',password = '${newAdmin.password}' WHERE id=${Number(newAdmin.id)}`;
+        let sqlInsert = `UPDATE users SET name ='${newAdmin.name}', email= '${newAdmin.email}',password = '${newAdmin.password}',role = '${newAdmin.role}' WHERE id=${Number(newAdmin.id)}`;
         return await this.querySQL(sqlInsert);
 
     }
@@ -22,12 +22,21 @@ class UserModel extends BaseModel {
         return await this.querySQL(sql);
     }
     async createNewAdmin(admin) {
-        let sql = `insert into users(name, email, password) VALUES ('${admin.name}', '${admin.email}', '${admin.password}')`;
+        let sql = `insert into users(name, email, password,role) VALUES ('${admin.name}', '${admin.email}', '${admin.password}','${admin.role}')`;
         return await this.querySQL(sql);
     }
     async findByName(name) {
         const sql = `SELECT * FROM users WHERE name LIKE '%${name}%'`;
         return await this.querySQL(sql)
+    }
+    async addUsers(users) {
+        const sql = `INSERT INTO users(name, email, password, role) VALUES ('${users.name}', '${users.email}', '${users.password}', 'user')`;
+        return await this.querySQL(sql);
+    }
+    async findUsers(data) {
+        const sql = `SELECT * FROM users
+                                WHERE email = '${data.email}'`;
+        return await this.querySQL(sql);
     }
 }
 module.exports = UserModel;

@@ -29,12 +29,12 @@ const server = http.createServer((req, res) => {
     let urlPath = urlParse.pathname;
     let method = req.method;
     const filesDefences = req.url.match(/\.js|\.css|\.jpg|\.png|\.gif|\.min.js|\.min.css|\.svg|\.ico/);
-    console.log(filesDefences)
+    // console.log(filesDefences)
     if (filesDefences) {
         // console.log(filesDefences)
         let filePath = filesDefences[0].toString()
         let extension = mimeTypes[filesDefences[0].toString().split('.')[1]];
-        console.log(filePath)
+        // console.log(filePath)
         if (filePath.includes('min.css')) {
             // console.log(filesDefences[0].toString().slice(1, filesDefences[0].toString().length));
             extension = mimeTypes[filesDefences[0].toString().slice(1, filesDefences[0].toString().length)]
@@ -65,6 +65,15 @@ const server = http.createServer((req, res) => {
                 authController.login(req, res)
             }
             break;
+
+        case '/register':
+            if(req.method === 'GET') {
+                authController.showFormRegister(req, res) ;
+            }else {
+                authController.register(req, res)
+            }
+                break;
+
         case '/admin':
             authController.showFormAdmin(req, res);
             break;

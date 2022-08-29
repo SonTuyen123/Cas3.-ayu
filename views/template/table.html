@@ -224,6 +224,7 @@
                         <th style="color:black">Name</th>
                         <th style="color:black">Email</th>
                         <th style="color:black">Password</th>
+                        <th style="color:black">Role</th>
                         <th style="width: 100px; color:black">Action</th>
                     </tr>
                     </thead>
@@ -260,6 +261,11 @@
                                 <div class="mb-3">
                                     <label for="recipient-password" class="col-form-label">Password:</label>
                                     <input type="text" class="form-control" id="recipient-password" name="password"
+                                           style="color: white">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="recipient-role" class="col-form-label">Role::</label>
+                                    <input type="text" class="form-control" id="recipient-role" name="role"
                                            style="color: white">
                                 </div>
                                 <div class="modal-footer">
@@ -306,6 +312,8 @@
         document.getElementById('recipient-email').value = objProduct.email;
         document.getElementById('recipient-password').value = objProduct.password
         document.getElementById('recipient-id').value = objProduct.id;
+        document.getElementById('recipient-role').value = objProduct.role;
+
     }
 </script>
 </body>

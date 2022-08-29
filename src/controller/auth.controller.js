@@ -3,13 +3,15 @@ const qs = require('qs');
 const cookie = require('cookie');
 const url = require('url')
 const  UserModel = require('../model/user.model')
-
+const  validate = require('../model/validate.user')
 
 class  AuthController{
     UserModel;
+    validate;
 
     constructor(){
         this.UserModel = new UserModel();
+        this.validate = new validate();
     }
 
     showHomePage(req, res){
@@ -44,6 +46,7 @@ class  AuthController{
                     html += `<td>${element.name}</td>`;
                     html += `<td>${element.email}</td>`;
                     html += `<td>${element.password}</td>`;
+                    html += `<td>${element.role}</td>`;
                     html += `<td>${editButton(JSON.stringify(element))}</td>`;
                     html += `<td><a onclick="return confirm('Are you sure?')" href="/admin/delete?index=${element.id}" class ="btn btn-danger">DELETE</a></td>`;
                   });
@@ -79,10 +82,16 @@ class  AuthController{
         });
         req.on('end', async () => {
             let admin = qs.parse(data);
-            await this.UserModel.createNewAdmin(admin);
-            res.setHeader('Cache-Control', 'no-store');
-            res.writeHead(301, {'location': '/table'});
-            return res.end();
+            let findUser = await this.UserModel.findUsers(admin)
+            if(findUser.length >0){
+                console.log('Tài khoản đã tồn tại !');
+                this.showFormCreateAdmin(req,res);
+            }else {
+                await this.UserModel.createNewAdmin(admin);
+                res.setHeader('Cache-Control', 'no-store');
+                res.writeHead(301, {'location': '/table'});
+                return res.end();
+            }
         });
      }
 
@@ -121,6 +130,7 @@ class  AuthController{
                 html += `<td>${index + 1}</td>`;
                 html += `<td>${element.name}</td>`;
                 html += `<td>${element.email}</td>`;
+                html += `<td>${element.password}</td>`;
                 html += `<td>${element.password}</td>`;
                 html += `<td>${editButton(JSON.stringify(element))}</td>`;
                 html += `<td><a onclick="return confirm('Are you sure?')" href="/admin/delete?index=${element.id}" class ="btn btn-danger">Delete</a></td>`;
@@ -172,8 +182,8 @@ class  AuthController{
         req.on('end', async () => {
             let dataForm = qs.parse(data);
             let result = await this.UserModel.findUser(dataForm)
-            console.log(dataForm)
-            console.log(result)
+            // console.log(dataForm)
+            // console.log(result)
             //tao session
             let sessionLogin = {
                 email: dataForm.email,
@@ -197,8 +207,17 @@ class  AuthController{
 
                 fs.writeFileSync('./session/' + nameFile + '.txt', dataSession);
                 res.setHeader('Cache-Control', 'no-store');
-                res.writeHead(301, {'Location': '/admin'});
-                res.end()
+                console.log(result[0].role)
+                if(result[0].role === 'admin'){
+                    console.log(1)
+                    res.writeHead(301, {'Location': '/admin'});
+                    res.end()
+                }else {
+                    console.log(2)
+                    res.writeHead(301, {'Location': '/'});
+                    res.end()
+                }
+
             }else {
                 let dataCookie = {
                     email: dataForm.email,
@@ -209,6 +228,36 @@ class  AuthController{
                 res.setHeader('Cache-Control', 'no-store');
                 res.writeHead(301, {'Location': '/login'});
                 res.end();
+            }
+        })
+    }
+    showFormRegister(req,res){
+        fs.readFile('./views/template/register.html', 'utf8', (err, data) => {
+            res.setHeader('Cache-Control', 'no-store');
+            res.writeHead(200, { 'Content-Type': 'text/html'});
+            res.write(data);
+            res.end();
+        })
+    }
+    register(req,res){
+        let data = '';
+        req.on('data',chunk => data += chunk);
+        req.on('end',async () => {
+            let dataForm = qs.parse(data);
+            console.log(dataForm)
+            let validate = await this.validate.validate(req, res,dataForm.name,dataForm.email,dataForm.password);
+            console.log(validate)
+            if(validate){
+                let findUser = await this.UserModel.findUsers(dataForm)
+                if(findUser.length > 0){
+                    this.showFormRegister(req,res);
+                }else {
+                    console.log('add')
+                    let result = await this.UserModel.addUsers(dataForm);
+                    res.setHeader('Cache-Control', 'no-store');
+                    res.writeHead(301, {'Location': '/login'});
+                    res.end();
+                }
             }
         })
     }
