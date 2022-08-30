@@ -8,9 +8,9 @@ class DBConnect {
     constructor() {
         this.host = 'localhost';
         this.port = 3306;
-        this.database = 'case2';
+        this.database = 'case3';
         this.user = 'root';
-        this.password = '123456'
+        this.password = '22122000'
     }
 
     connect() {
