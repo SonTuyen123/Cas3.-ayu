@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+    body {
+      font-family: "Poppins", sans-serif;
+      color: #444444;
+    }
+
+    a,
+    a:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .section-products {
+      padding: 80px 0 54px;
+    }
+
+    .section-products .header {
+      margin-bottom: 50px;
+    }
+
+    .section-products .header h3 {
+      font-size: 1rem;
+      color: #fe302f;
+      font-weight: 500;
+    }
+
+    .section-products .header h2 {
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: #444444;
+    }
+
+    .section-products .single-product {
+      margin-bottom: 26px;
+    }
+
+    .section-products .single-product .part-1 {
+      position: relative;
+      height: 290px;
+      max-height: 290px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .section-products .single-product .part-1::before {
+      position: absolute;
+      content: "";
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      transition: all 0.3s;
+    }
+
+    .section-products .single-product:hover .part-1::before {
+      transform: scale(1.2,1.2) rotate(5deg);
+    }
+
+    .section-products #product-1 .part-1::before {
+      background: url("https://btsneaker.vn/wp-content/uploads/2021/09/doi-giay-cr7-cua-ronaldo-gia-bao-nhieu-top-5-mau-dep-nhat-3.jpg") no-repeat center;
+      background-size: cover;
+      transition: all 0.3s;
+    }
+
+    .section-products #product-2 .part-1::before {
+      background: url("https://mitdecor.com/wp-content/uploads/2021/08/dia-chi-custom-giay-da-bong.jpg") no-repeat center;
+      background-size: cover;
+    }
+
+    .section-products #product-3 .part-1::before {
+      background: url("https://i.ibb.co/L8Nrb7p/1.jpg") no-repeat center;
+      background-size: cover;
+    }
+
+    .section-products #product-4 .part-1::before {
+      background: url("https://i.ibb.co/cLnZjnS/2.jpg") no-repeat center;
+      background-size: cover;
+    }
+    .section-products #product-6 .part-1::before {
+         background: url("https://phunugioi.com/wp-content/uploads/2021/10/Hinh-anh-qua-bong.jpg") no-repeat center;
+         background-size: cover;
+       }
+    .section-products #product-7 .part-1::before {
+      background: url("https://1.bp.blogspot.com/-SeQJkaW-F6U/YTV-_HmNnyI/AAAAAAAAGag/4NXxyqlTs1gS4Zz_VRX8QrirHyGQKk7DwCLcBGAsYHQ/s500/tennis.jpg") no-repeat center;
+      background-size: cover;
+    }
+    .section-products #product-8 .part-1::before {
+      background: url("https://tennissaigon.com/wp-content/uploads/2020/12/bong-tennis.jpg") no-repeat center;
+      background-size: cover;
+    }
+    .section-products #product-9 .part-1::before {
+      background: url("https://my-test-11.slatic.net/p/c842a062737e5f803c4301824da8bf7e.jpg") no-repeat center;
+      background-size: cover;
+    }
+
+    .section-products .single-product .part-1 .discount,
+    .section-products .single-product .part-1 .new {
+      position: absolute;
+      top: 15px;
+      left: 20px;
+      color: #ffffff;
+      background-color: #fe302f;
+      padding: 2px 8px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    .section-products .single-product .part-1 .new {
+      left: 0;
+      background-color: #444444;
+    }
+
+    .section-products .single-product .part-1 ul {
+      position: absolute;
+      bottom: -41px;
+      left: 20px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      opacity: 0;
+      transition: bottom 0.5s, opacity 0.5s;
+    }
+
+    .section-products .single-product:hover .part-1 ul {
+      bottom: 30px;
+      opacity: 1;
+    }
+
+    .section-products .single-product .part-1 ul li {
+      display: inline-block;
+      margin-right: 4px;
+    }
+
+    .section-products .single-product .part-1 ul li a {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      background-color: #ffffff;
+      color: #444444;
+      text-align: center;
+      box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
+      transition: color 0.2s;
+    }
+
+    .section-products .single-product .part-1 ul li a:hover {
+      color: #fe302f;
+    }
+
+    .section-products .single-product .part-2 .product-title {
+      font-size: 1rem;
+    }
+
+    .section-products .single-product .part-2 h4 {
+      display: inline-block;
+      font-size: 1rem;
+    }
+
+    .section-products .single-product .part-2 .product-old-price {
+      position: relative;
+      padding: 0 7px;
+      margin-right: 2px;
+      opacity: 0.6;
+    }
+
+    .section-products .single-product .part-2 .product-old-price::after {
+      position: absolute;
+      content: "";
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: #444444;
+      transform: translateY(-50%);
+    }
+  </style>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-lg-9">
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table table-borderless table-shopping-cart">
+            <thead class="text-muted">
+            <tr class="small text-uppercase">
+              <th scope="col">Product</th>
+              <th scope="col" width="120">Quantity</th>
+              <th scope="col" width="120">Price</th>
+              <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <figure class="itemside align-items-center">
+                  <div class="aside"><img src="https://i.imgur.com/1eq5kmC.png" class="img-sm"></div>
+                  <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">Tshirt with round nect</a>
+                    <p class="text-muted small">SIZE: L <br> Brand: MAXTRA</p>
+                  </figcaption>
+                </figure>
+              </td>
+              <td> <select class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select> </td>
+              <td>
+                <div class="price-wrap"> <var class="price">$10.00</var> <small class="text-muted"> $9.20 each </small> </div>
+              </td>
+              <td class="text-right d-none d-md-block"> <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a> <a href="" class="btn btn-light" data-abc="true"> Remove</a> </td>
+            </tr>
+            <tr>
+              <td>
+                <figure class="itemside align-items-center">
+                  <div class="aside"><img src="https://i.imgur.com/hqiAldf.jpg" class="img-sm"></div>
+                  <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">Flower Formal T-shirt</a>
+                    <p class="text-muted small">SIZE: L <br> Brand: ADDA </p>
+                  </figcaption>
+                </figure>
+              </td>
+              <td> <select class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select> </td>
+              <td>
+                <div class="price-wrap"> <var class="price">$15</var> <small class="text-muted"> $12 each </small> </div>
+              </td>
+              <td class="text-right d-none d-md-block"> <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a> <a href="" class="btn btn-light btn-round" data-abc="true"> Remove</a> </td>
+            </tr>
+            <tr>
+              <td>
+                <figure class="itemside align-items-center">
+                  <div class="aside"><img src="https://i.imgur.com/UwvU0cT.jpg" class="img-sm"></div>
+                  <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">Printed White Tshirt</a>
+                    <p class="small text-muted">SIZE:M <br> Brand: Cantabil</p>
+                  </figcaption>
+                </figure>
+              </td>
+              <td> <select class="form-control">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select> </td>
+              <td>
+                <div class="price-wrap"> <var class="price">$9</var> <small class="text-muted"> $6 each</small> </div>
+              </td>
+              <td class="text-right d-none d-md-block"> <a data-original-title="Save to Wishlist" title="" href="" class="btn btn-light" data-toggle="tooltip" data-abc="true"> <i class="fa fa-heart"></i></a> <a href="" class="btn btn-light btn-round" data-abc="true"> Remove</a> </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </aside>
+    <aside class="col-lg-3">
+      <div class="card mb-3">
+        <div class="card-body">
+          <form>
+            <div class="form-group"> <label>Have coupon?</label>
+              <div class="input-group"> <input type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <dl class="dlist-align">
+            <dt>Total price:</dt>
+            <dd class="text-right ml-3">$69.97</dd>
+          </dl>
+          <dl class="dlist-align">
+            <dt>Discount:</dt>
+            <dd class="text-right text-danger ml-3">- $10.00</dd>
+          </dl>
+          <dl class="dlist-align">
+            <dt>Total:</dt>
+            <dd class="text-right text-dark b ml-3"><strong>$59.97</strong></dd>
+          </dl>
+          <hr> <a href="#" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Make Purchase </a> <a href="#" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+<div>
+  <section class="section-products">
+    <div class="container">
+      <div class="row justify-content-center text-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="header">
+            <h3>Featured Product</h3>
+            <h2>Popular Products</h2>
+            <i class='bx bxs-cart' id ="cart"></i>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-6" class="single-product">
+            <div class="part-1">
+              <ul>
+                <li><a href=""><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-old-price">$79.99</h4>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-7" class="single-product">
+            <div class="part-1">
+              <span class="discount">15% off</span>
+              <ul>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-8" class="single-product">
+            <div class="part-1">
+              <ul>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-old-price">$79.99</h4>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-9" class="single-product">
+            <div class="part-1">
+              <span class="new">new</span>
+              <ul>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-1" class="single-product">
+            <div class="part-1">
+              <ul>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-old-price">$79.99</h4>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-2" class="single-product">
+            <div class="part-1">
+              <span class="discount">15% off</span>
+              <ul>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-3" class="single-product">
+            <div class="part-1">
+              <ul>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-old-price">$79.99</h4>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+        <!-- Single Product -->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div id="product-4" class="single-product">
+            <div class="part-1">
+              <span class="new">new</span>
+              <ul>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+              </ul>
+            </div>
+            <div class="part-2">
+              <h3 class="product-title">Here Product Title</h3>
+              <h4 class="product-price">$49.99</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

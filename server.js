@@ -4,9 +4,11 @@ const fs = require("fs");
 const qs = require("qs");
 
 const AuthController = require("./src/controller/auth.controller");
+const HomeController = require("./src/controller/home.controller");
 const port = 9000;
 
 let authController = new AuthController();
+let homeController = new HomeController();
 
 const mimeTypes = {
     "html": "text/html",
@@ -29,34 +31,25 @@ const server = http.createServer((req, res) => {
     let urlPath = urlParse.pathname;
     let method = req.method;
     const filesDefences = req.url.match(/\.js|\.css|\.jpg|\.png|\.gif|\.min.js|\.min.css|\.svg|\.ico/);
-    // console.log(filesDefences)
     if (filesDefences) {
-        // console.log(filesDefences)
         let filePath = filesDefences[0].toString()
         let extension = mimeTypes[filesDefences[0].toString().split('.')[1]];
-        // console.log(filePath)
         if (filePath.includes('min.css')) {
-            // console.log(filesDefences[0].toString().slice(1, filesDefences[0].toString().length));
             extension = mimeTypes[filesDefences[0].toString().slice(1, filesDefences[0].toString().length)]
         }
         if (filePath.includes('min.js')) {
-            // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
             extension = mimeTypes[filesDefences[0].toString().slice(1, filesDefences[0].toString().length)]
         }
         if (filePath.includes('.ico')) {
-            // console.log(filesDefences[0].toString().slice(1,filesDefences[0].toString().length));
             extension = mimeTypes[filesDefences[0].toString().slice(1, filesDefences[0].toString().length)]
-            // console.log(extension)
-            // console.log(req.url);
         }
-
         res.writeHead(200, {'Content-Type': extension});
         fs.createReadStream(__dirname + "/views/template/" + req.url).pipe(res);
     }
 
     switch (urlPath) {
         case '/':
-            authController.showHomePage(req, res)
+            homeController.showHomePage(req, res)
             break;
         case '/login':
             if (method === 'GET') {

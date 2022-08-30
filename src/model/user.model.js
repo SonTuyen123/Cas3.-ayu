@@ -38,5 +38,6 @@ class UserModel extends BaseModel {
                                 WHERE email = '${data.email}'`;
         return await this.querySQL(sql);
     }
+
 }
 module.exports = UserModel;

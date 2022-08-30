@@ -15,6 +15,154 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap');
+            body {
+                font-family: "Poppins", sans-serif;
+                color: #444444;
+            }
+
+            a,
+            a:hover {
+                text-decoration: none;
+                color: inherit;
+            }
+
+            .section-products {
+                padding: 80px 0 54px;
+            }
+
+            .section-products .header {
+                margin-bottom: 50px;
+            }
+
+            .section-products .header h3 {
+                font-size: 1rem;
+                color: #fe302f;
+                font-weight: 500;
+            }
+
+            .section-products .header h2 {
+                font-size: 2.2rem;
+                font-weight: 400;
+                color: #444444;
+            }
+
+            .section-products .single-product {
+                margin-bottom: 26px;
+            }
+
+            .section-products .single-product .part-1 {
+                position: relative;
+                height: 290px;
+                max-height: 290px;
+                margin-bottom: 20px;
+                overflow: hidden;
+            }
+
+            .section-products .single-product .part-1::before {
+                position: absolute;
+                content: "";
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                transition: all 0.3s;
+            }
+
+            .section-products .single-product:hover .part-1::before {
+                transform: scale(1.2,1.2) rotate(5deg);
+            }
+
+            .section-products #product-1 .part-1::before {
+                background-size: cover;
+                transition: all 0.3s;
+            }
+
+
+            .section-products .single-product .part-1 .discount,
+            .section-products .single-product .part-1 .new {
+                position: absolute;
+                top: 15px;
+                left: 20px;
+                color: #ffffff;
+                background-color: #fe302f;
+                padding: 2px 8px;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+            }
+
+            .section-products .single-product .part-1 .new {
+                left: 0;
+                background-color: #444444;
+            }
+
+            .section-products .single-product .part-1 ul {
+                position: absolute;
+                bottom: -41px;
+                left: 20px;
+                margin: 0;
+                padding: 0;
+                list-style: none;
+                opacity: 0;
+                transition: bottom 0.5s, opacity 0.5s;
+            }
+
+            .section-products .single-product:hover .part-1 ul {
+                bottom: 30px;
+                opacity: 1;
+            }
+
+            .section-products .single-product .part-1 ul li {
+                display: inline-block;
+                margin-right: 4px;
+            }
+
+            .section-products .single-product .part-1 ul li a {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                background-color: #ffffff;
+                color: #444444;
+                text-align: center;
+                box-shadow: 0 2px 20px rgb(50 50 50 / 10%);
+                transition: color 0.2s;
+            }
+
+            .section-products .single-product .part-1 ul li a:hover {
+                color: #fe302f;
+            }
+
+            .section-products .single-product .part-2 .product-title {
+                font-size: 1rem;
+            }
+
+            .section-products .single-product .part-2 h4 {
+                display: inline-block;
+                font-size: 1rem;
+            }
+
+            .section-products .single-product .part-2 .product-old-price {
+                position: relative;
+                padding: 0 7px;
+                margin-right: 2px;
+                opacity: 0.6;
+            }
+
+            .section-products .single-product .part-2 .product-old-price::after {
+                position: absolute;
+                content: "";
+                top: 50%;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background-color: #444444;
+                transform: translateY(-50%);
+            }
+        </style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -28,8 +176,8 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">Product</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Product</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
                         <li class="nav-item"><a class="nav-link" href="/login">Sign in</a></li>
                     </ul>
@@ -180,68 +328,19 @@
                 </div>
             </div>
         </section>
-        <!-- About-->
-        <section class="page-section" id="about">
-            <div class="container">
-                <div class="text-center">
-                    <h2 class="section-heading text-uppercase">About</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
-                <ul class="timeline">
-                    <li>
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>2009-2011</h4>
-                                <h4 class="subheading">Our Humble Beginnings</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+        <!-- Product-->
+                <section class="section-products" id="about">
+                    <div class="container">
+                                <div class="header">
+                                    <h1>Popular Products</h1>
                         </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>March 2011</h4>
-                                <h4 class="subheading">An Agency is Born</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
+                        <div class="row">
+                            <!-- Single Product -->
+                            {list-product}
                         </div>
-                    </li>
-                    <li>
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>December 2015</h4>
-                                <h4 class="subheading">Transition to Full Service</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>July 2020</h4>
-                                <h4 class="subheading">Phase Two Expansion</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image">
-                            <h4>
-                                Be Part
-                                <br />
-                                Of Our
-                                <br />
-                                Story!
-                            </h4>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </section>
+                    </div>
+                </section>
+
         <!-- Team-->
         <section class="page-section bg-light" id="team">
             <div class="container">
@@ -606,5 +705,23 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script>
+        function total1(){
+             let number1 = document.getElementById('number1').value;
+             return number1 * 10;
+        }
+        function total2(){
+            let number2 = document.getElementById('number2').value;
+            console.log(number2 * 15)
+            return number2 * 15;
+        }
+        function total3(){
+            let number3 = document.getElementById('number3').value;
+            console.log(number3 * 9)
+            return number3 * 9;
+        }
+
+
+    </script>
     </body>
 </html>

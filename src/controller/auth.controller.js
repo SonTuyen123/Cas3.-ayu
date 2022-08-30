@@ -14,14 +14,6 @@ class  AuthController{
         this.validate = new validate();
     }
 
-    showHomePage(req, res){
-        fs.readFile('./views/template/index.html', 'utf8', (err, data) => {
-            res.setHeader('Cache-Control', 'no-store');
-            res.writeHead(200, { 'Content-Type': 'text/html'});
-            res.write(data);
-            res.end();
-        })
-    }
     showFormAdmin(req, res) {
         fs.readFile('./views/template/admin.html', 'utf8', (err, data) => {
             res.setHeader('Cache-Control', 'no-store');
