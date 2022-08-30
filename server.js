@@ -5,10 +5,13 @@ const qs = require("qs");
 
 const AuthController = require("./src/controller/auth.controller");
 const HomeController = require("./src/controller/home.controller");
+const ProductsController = require("./src/controller/products.controller");
+
 const port = 9000;
 
 let authController = new AuthController();
 let homeController = new HomeController();
+let productsController = new ProductsController();
 
 const mimeTypes = {
     "html": "text/html",
@@ -60,12 +63,12 @@ const server = http.createServer((req, res) => {
             break;
 
         case '/register':
-            if(req.method === 'GET') {
-                authController.showFormRegister(req, res) ;
-            }else {
+            if (req.method === 'GET') {
+                authController.showFormRegister(req, res);
+            } else {
                 authController.register(req, res)
             }
-                break;
+            break;
 
         case '/admin':
             authController.showFormAdmin(req, res);
@@ -92,6 +95,10 @@ const server = http.createServer((req, res) => {
             break;
         case '/search':
             authController.searchAdmin(req, res).catch();
+            break;
+        case '/products':
+            let idProduct = qs.parse(urlParse.query).id
+            productsController.addProducttoCart(req,res,idProduct)
             break;
     }
 });

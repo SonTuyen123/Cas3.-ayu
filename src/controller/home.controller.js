@@ -7,7 +7,6 @@ class HomeController{
     constructor() {
         this.products = new ProductsModel();
     }
-
     async showHomePage(req, res) {
         let getAllProducts = await this.products.getAllProducts();
         let html = '';
@@ -22,10 +21,15 @@ class HomeController{
                                             <li><a href="#"><i class="fas fa-expand"></i></a></li>
                                         </ul>
                                     </div>
-                                    <div class="part-2">
-                                        <h3 class="product-title">${products.name}</h3>
+                                    <div class="part-2 d-flex justify-content-between align-items-center">
+                                       <div>
+                                         <h3 class="product-title">${products.name}</h3>
                                         <h4 class="product-old-price">$79.99</h4>
                                         <h4 class="product-price">$${products.price}</h4>
+                                        </div>
+                                        <div>
+                                         <a href="/products?id=${products.id}"></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>`
@@ -38,5 +42,8 @@ class HomeController{
             res.end();
         })
     }
+
+
+
  }
  module.exports = HomeController;

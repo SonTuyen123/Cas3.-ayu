@@ -184,7 +184,6 @@ class  AuthController{
             //ghi session vào file
             let nameFile = Date.now();
             let dataSession = JSON.stringify(sessionLogin);
-
             if (result.length > 0) {
                 //tao cookie
                 let dataCookie = {
@@ -193,13 +192,11 @@ class  AuthController{
                     sessionId: nameFile
                 }
                 const setCookie = cookie.serialize('user',JSON.stringify(dataCookie));
-
                 //gui cookie ve cho trinh duyet
                 res.setHeader('Set-Cookie',setCookie);
 
                 fs.writeFileSync('./session/' + nameFile + '.txt', dataSession);
                 res.setHeader('Cache-Control', 'no-store');
-                console.log(result[0].role)
                 if(result[0].role === 'admin'){
                     console.log(1)
                     res.writeHead(301, {'Location': '/admin'});
