@@ -68,7 +68,6 @@ const httpServer = http.createServer((req, res) => {
                 authController.login(req, res)
             }
             break;
-
         case '/register':
             if (req.method === 'GET') {
                 authController.showFormRegister(req, res);
@@ -76,7 +75,6 @@ const httpServer = http.createServer((req, res) => {
                 authController.register(req, res)
             }
             break;
-
         case '/admin':
             authController.showFormAdmin(req, res);
             break;
@@ -121,7 +119,8 @@ const httpServer = http.createServer((req, res) => {
             chatController.showChatAdmin(req, res);
             break;
     }
-});let io = new Server(httpServer,{
+});
+let io = new Server(httpServer,{
     cors: {
         origin: 'http://localhost:9000/support',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],

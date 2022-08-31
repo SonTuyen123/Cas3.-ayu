@@ -13,7 +13,6 @@ class  AuthController{
         this.UserModel = new UserModel();
         this.validate = new validate();
     }
-
     showFormAdmin(req, res) {
         fs.readFile('./views/template/admin.html', 'utf8', (err, data) => {
             res.setHeader('Cache-Control', 'no-store');
