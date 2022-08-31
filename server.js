@@ -2,18 +2,24 @@ const http = require('http');
 const url = require("url");
 const fs = require("fs");
 const qs = require("qs");
+
 const AuthController = require("./src/controller/auth.controller");
 const HomeController = require("./src/controller/home.controller");
 const ProductsController = require("./src/controller/products.controller");
 const CartController = require("./src/controller/cart.controller");
+const {Server}= require("socket.io")
+const ChatController = require("./src/controller/chat.controller");
+
+
 const port = 9000;
 
 let authController = new AuthController();
 let homeController = new HomeController();
 let productsController = new ProductsController();
+
 let cartController = new CartController();
 
-
+let chatController = new ChatController();
 const mimeTypes = {
     "html": "text/html",
     "js": "text/javascript",
@@ -30,7 +36,7 @@ const mimeTypes = {
     "svg": "image/svg+xml",
     "ico": "image/vnd.microsoft.icon"
 };
-const server = http.createServer((req, res) => {
+const httpServer = http.createServer((req, res) => {
     let urlParse = url.parse(req.url)
     let urlPath = urlParse.pathname;
     let method = req.method;
@@ -101,16 +107,46 @@ const server = http.createServer((req, res) => {
             let idProduct = qs.parse(urlParse.query).id
             productsController.addProducttoCart(req, res, idProduct)
             break;
+
         case '/cart':
             cartController.showCart(req, res)
             break;
         case '/pay':
             homeController.showHomePage(req, res)
             break;
-
+        case'/support':
+            chatController.showChat(req,res);
+            break;
+        case'/adminsupport':
+            chatController.showChatAdmin(req, res);
+            break;
+    }
+});let io = new Server(httpServer,{
+    cors: {
+        origin: 'http://localhost:9000/support',
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
     }
 });
-server.listen(port, () => {
+let users = [];
+io.on('connection', socket => {
+    socket.on('new-user', name => {
+        users[socket.id] = name;
+        socket.broadcast.emit('user-connected', name);
+    })
+    socket.on('disconnect', () => {
+        socket.broadcast.emit('user-disconnect', users[socket.id]);
+        delete users[socket.id];
+    })
+    socket.on('send-chat-message', message => {
+        let room = {
+            name : users[socket.id],
+            message : message
+        }
+        socket.broadcast.emit('chat-message', room)
+        chatController.createMessage(room)
+    })
+})
+
+httpServer.listen(port, () => {
     console.log(`http://localhost:${port}`);
 });
-

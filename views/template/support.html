@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Support Online</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="css/styles.css" rel="stylesheet"/>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: right;
+            background-color: #74EBD5;
+            background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+            min-height: 100vh;
+        }
+
+        #message-container {
+            max-width: 1200px;
+            background-color: rgb(25, 28, 36);
+            width: 736px;
+            border-radius: 10px;
+            margin-top: 80px;
+            font-size: 16px;
+        }
+
+        #message-container div {
+            background-color: white;
+            color: black;
+            padding: 5px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            width: auto;
+
+        }
+
+        #message-container div:nth-child(2n) {
+            background-color: deepskyblue;
+            color: white;
+            border-radius: 10px;
+            padding: 5px;
+            width: auto;
+        }
+
+        #send-container {
+            position: fixed;
+            padding-bottom: 10px;
+            bottom: 0;
+            max-width: 1024px;
+            width: 50%;
+            display: flex;
+            height: 30px;
+        }
+
+        #message-input {
+            flex-grow: 1;
+            border-radius: 10px;
+            border: 1px solid white;
+            height: 35px;
+            font-size: 14px;
+
+        }
+
+        .send-button {
+            border-radius: 10px;
+            background-color: skyblue;
+            color: white;
+            height: 30px;
+            border: 1px solid white;
+            width: 60px;
+        }
+
+        .send-message {
+            max-width: 1200px;
+        }
+
+        .send-message div {
+            text-align: right;
+        }
+
+        .send-message div:nth-child(2n) {
+            text-align: left;
+
+        }
+
+        .img-fluid {
+            margin-top: 90px;
+            margin-right: 70px;
+
+        }
+    </style>
+
+</head>
+<body >
+<tbody id="page=top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="assets/img/navbar-logo.svg" alt="..."/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                <li class="nav-item"><a class="nav-link" href="/">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Product</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">Team</a></li>
+                <li class="nav-item"><a class="nav-link" href="/support">Support Online</a></li>
+                <li class="nav-item"><a class="nav-link" href="/login">Sign in</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</tbody>
+<div>
+    <img class="img-fluid" src="12982910_5124556.jpg" alt="..." width="570" height="500"/>
+</div>
+<div id="message-container" class="send-message">
+    {history}
+</div>
+
+<form id="send-container">
+    <input type="text" id="message-input" placeholder="Nhắn tin ....">
+    <button type="button" class="send-button">Gửi </button>
+</form>
+<script src="https://cdn.socket.io/4.5.0/socket.io.min.js" crossorigin="anonymous"></script>
+<script>
+    let socket = io()
+    let messageContainer = document.getElementById('message-container');
+    let messageForm = document.getElementById('send-container');
+    let textMessage = document.getElementById('message-input');
+    let name = prompt('nhap ten');
+    if ('Admin') {
+        appendMessage(`Đã kết nối với Admin`)
+    }
+    else{
+        appendMessage(`Xin vui lòng đợi Admin trong chốc lát`)
+    }
+    socket.emit('new-user', name);
+    socket.on('user-connected', name => {
+        appendMessage(`${name} da ket noi`);
+    })
+    socket.on('user-disconnect', name => {
+        appendMessage(`${name} da roi khoi phong chat `);
+    })
+    socket.on('chat-message', user => {
+
+        appendMessage(`${user.name}:${user.message}`);
+
+    })
+
+    messageForm.addEventListener('submit', e => {
+        e.preventDefault();
+        let message = textMessage.value;
+        socket.emit('send-chat-message', message)
+        appendMessage(`${message} :You`)
+        textMessage.value = '';
+    })
+
+    function appendMessage(message) {
+        let divElement = document.createElement("div")
+        divElement.innerHTML = message;
+        messageContainer.append(divElement)
+    }
+</script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="js/scripts.js"></script>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+</html>
