@@ -2,16 +2,17 @@ const http = require('http');
 const url = require("url");
 const fs = require("fs");
 const qs = require("qs");
-
 const AuthController = require("./src/controller/auth.controller");
 const HomeController = require("./src/controller/home.controller");
 const ProductsController = require("./src/controller/products.controller");
-
+const CartController = require("./src/controller/cart.controller");
 const port = 9000;
 
 let authController = new AuthController();
 let homeController = new HomeController();
 let productsController = new ProductsController();
+let cartController = new CartController();
+
 
 const mimeTypes = {
     "html": "text/html",
@@ -98,8 +99,15 @@ const server = http.createServer((req, res) => {
             break;
         case '/products':
             let idProduct = qs.parse(urlParse.query).id
-            productsController.addProducttoCart(req,res,idProduct)
+            productsController.addProducttoCart(req, res, idProduct)
             break;
+        case '/cart':
+            cartController.showCart(req, res)
+            break;
+        case '/pay':
+            homeController.showHomePage(req, res)
+            break;
+
     }
 });
 server.listen(port, () => {

@@ -5,111 +5,833 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-    body{background-color: #eeeeee;font-family: 'Open Sans',serif;font-size: 14px}.container-fluid{margin-top:70px}.card-body{-ms-flex: 1 1 auto;flex: 1 1 auto;padding: 1.40rem}.img-sm{width: 80px;height: 80px}.itemside .info{padding-left: 15px;padding-right: 7px}.table-shopping-cart .price-wrap{line-height: 1.2}.table-shopping-cart .price{font-weight: bold;margin-right: 5px;display: block}.text-muted{color: #969696 !important}a{text-decoration: none !important}.card{position: relative;display: -ms-flexbox;display: flex;-ms-flex-direction: column;flex-direction: column;min-width: 0;word-wrap: break-word;background-color: #fff;background-clip: border-box;border: 1px solid rgba(0,0,0,.125);border-radius: 0px}.itemside{position: relative;display: -webkit-box;display: -ms-flexbox;display: flex;width: 100%}.dlist-align{display: -webkit-box;display: -ms-flexbox;display: flex}[class*="dlist-"]{margin-bottom: 5px}.coupon{border-radius: 1px}.price{font-weight: 600;color: #212529}.btn.btn-out{outline: 1px solid #fff;outline-offset: -5px}.btn-main{border-radius: 2px;text-transform: capitalize;font-size: 15px;padding: 10px 19px;cursor: pointer;color: #fff;width: 100%}.btn-light{color: #ffffff;background-color: #F44336;border-color: #f8f9fa;font-size: 12px}.btn-light:hover{color: #ffffff;background-color: #F44336;border-color: #F44336}.btn-apply{font-size: 11px}
+    body{margin-top:20px;}
+    .event-schedule-area .section-title .title-text {
+      margin-bottom: 50px;
+    }
+
+    .event-schedule-area .tab-area .nav-tabs {
+      border-bottom: inherit;
+    }
+
+    .event-schedule-area .tab-area .nav {
+      border-bottom: inherit;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      margin-top: 80px;
+    }
+
+    .event-schedule-area .tab-area .nav-item {
+      margin-bottom: 75px;
+    }
+    .event-schedule-area .tab-area .nav-item .nav-link {
+      text-align: center;
+      font-size: 22px;
+      color: #333;
+      font-weight: 600;
+      border-radius: inherit;
+      border: inherit;
+      padding: 0px;
+      text-transform: capitalize !important;
+    }
+    .event-schedule-area .tab-area .nav-item .nav-link.active {
+      color: #4125dd;
+      background-color: transparent;
+    }
+
+    .event-schedule-area .tab-area .tab-content .table {
+      margin-bottom: 0;
+      width: 80%;
+    }
+    .event-schedule-area .tab-area .tab-content .table thead td,
+    .event-schedule-area .tab-area .tab-content .table thead th {
+      border-bottom-width: 1px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #252525;
+    }
+    .event-schedule-area .tab-area .tab-content .table td,
+    .event-schedule-area .tab-area .tab-content .table th {
+      border: 1px solid #b7b7b7;
+      padding-left: 30px;
+    }
+    .event-schedule-area .tab-area .tab-content .table tbody th .heading,
+    .event-schedule-area .tab-area .tab-content .table tbody td .heading {
+      font-size: 16px;
+      text-transform: capitalize;
+      margin-bottom: 16px;
+      font-weight: 500;
+      color: #252525;
+      margin-bottom: 6px;
+    }
+    .event-schedule-area .tab-area .tab-content .table tbody th span,
+    .event-schedule-area .tab-area .tab-content .table tbody td span {
+      color: #4125dd;
+      font-size: 18px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .event-schedule-area .tab-area .tab-content .table tbody th span.date,
+    .event-schedule-area .tab-area .tab-content .table tbody td span.date {
+      color: #656565;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 15px;
+    }
+    .event-schedule-area .tab-area .tab-content .table tbody th p {
+      font-size: 14px;
+      margin: 0;
+      font-weight: normal;
+    }
+
+    .event-schedule-area-two .section-title .title-text h2 {
+      margin: 0px 0 15px;
+    }
+
+    .event-schedule-area-two ul.custom-tab {
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      border-bottom: 1px solid #dee2e6;
+      margin-bottom: 30px;
+    }
+    .event-schedule-area-two ul.custom-tab li {
+      margin-right: 70px;
+      position: relative;
+    }
+    .event-schedule-area-two ul.custom-tab li a {
+      color: #252525;
+      font-size: 25px;
+      line-height: 25px;
+      font-weight: 600;
+      text-transform: capitalize;
+      padding: 35px 0;
+      position: relative;
+    }
+    .event-schedule-area-two ul.custom-tab li a:hover:before {
+      width: 100%;
+    }
+    .event-schedule-area-two ul.custom-tab li a:before {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      content: "";
+      background: #4125dd;
+      width: 0;
+      height: 2px;
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    .event-schedule-area-two ul.custom-tab li a.active {
+      color: #4125dd;
+    }
+
+    .event-schedule-area-two .primary-btn {
+      margin-top: 40px;
+    }
+
+    .event-schedule-area-two .tab-content .table {
+      -webkit-box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 1px 30px rgba(0, 0, 0, 0.1);
+      margin-bottom: 0;
+    }
+    .event-schedule-area-two .tab-content .table thead {
+      background-color: #007bff;
+      color: #fff;
+      font-size: 20px;
+    }
+    .event-schedule-area-two .tab-content .table thead tr th {
+      padding: 20px;
+      border: 0;
+    }
+    .event-schedule-area-two .tab-content .table tbody {
+      background: #fff;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr.inner-box {
+      border-bottom: 1px solid #dee2e6;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr th {
+      border: 0;
+      padding: 30px 20px;
+      vertical-align: middle;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr th .event-date {
+      color: #252525;
+      text-align: center;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr th .event-date span {
+      font-size: 50px;
+      line-height: 50px;
+      font-weight: normal;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td {
+      padding: 30px 20px;
+      vertical-align: middle;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .r-no span {
+      color: #252525;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap h3 a {
+      font-size: 20px;
+      line-height: 20px;
+      color: #cf057c;
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap h3 a:hover {
+      color: #4125dd;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .categories {
+
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      margin: 10px 0;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .categories a {
+      color: #252525;
+      font-size: 16px;
+      margin-left: 10px;
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .categories a:before {
+      content: "\f07b";
+      font-family: fontawesome;
+      padding-right: 5px;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .time span {
+      color: #252525;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .organizers {
+
+      display: -ms-inline-flexbox;
+      display: inline-flex;
+      margin: 10px 0;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .organizers a {
+      color: #4125dd;
+      font-size: 16px;
+      -webkit-transition: all 0.4s;
+      -o-transition: all 0.4s;
+      transition: all 0.4s;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .organizers a:hover {
+      color: #4125dd;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-wrap .organizers a:before {
+      content: "\f007";
+      font-family: fontawesome;
+      padding-right: 5px;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .primary-btn {
+      margin-top: 0;
+      text-align: center;
+    }
+    .event-schedule-area-two .tab-content .table tbody tr td .event-img img {
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+    }
   </style>
 </head>
 <body>
 <div>
-  <div class="container-fluid">
-    <div class="row">
-      <aside class="col-lg-9">
-        <div class="card">
-          <div class="table-responsive">
-            <table class="table table-borderless table-shopping-cart">
-              <thead class="text-muted">
-              <tr class="small text-uppercase">
-                <th scope="col">Product</th>
-                <th scope="col" width="250">Quantity</th>
-                <th scope="col" width="250">Price</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>
-                  <figure class="itemside align-items-center">
-                    <div class="aside"><img src="https://i.imgur.com/1eq5kmC.png" class="img-sm"></div>
-                    <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">Tshirt with round nect</a>
-                      <p class="text-muted small">SIZE: L <br> Brand: MAXTRA</p>
-                    </figcaption>
-                  </figure>
-                </td>
-                <td><input type="number" id="number1" name="number1" min="0"></td>
-                <td>
-                  <div class="price-wrap"> <var class="price">$10.00</var> <small class="text-muted"> $9.20 each </small> </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <figure class="itemside align-items-center">
-                    <div class="aside"><img src="https://i.imgur.com/hqiAldf.jpg" class="img-sm"></div>
-                    <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">Flower Formal T-shirt</a>
-                      <p class="text-muted small">SIZE: L <br> Brand: ADDA </p>
-                    </figcaption>
-                  </figure>
-                </td>
-                <td> <input type="number" id="" name="number2" name="number2" min="0"></td>
-                <td>
-                  <div class="price-wrap"> <var class="price">$15</var> <small class="text-muted"> $12 each </small> </div>
-                </td>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
-              </tr>
-              <tr>
-                <td>
-                  <figure class="itemside align-items-center">
-                    <div class="aside"><img src="https://i.imgur.com/UwvU0cT.jpg" class="img-sm"></div>
-                    <figcaption class="info"> <a href="#" class="title text-dark" data-abc="true">Printed White Tshirt</a>
-                      <p class="small text-muted">SIZE:M <br> Brand: Cantabil</p>
-                    </figcaption>
-                  </figure>
-                </td>
-                <td><input type="number" id="number3" name="number3" min="0"> </td>
-                <td>
-                  <div class="price-wrap"> <var class="price">$9</var> <small class="text-muted"> $6 each</small> </div>
-                </td>
-
-              </tr>
-              </tbody>
-            </table>
-          </div>
+  <div class="event-schedule-area-two bg-color pad100">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-title text-center">
+            <div class="title-text">
+              <h2>Selected Product</h2>
         </div>
-      </aside>
-      <aside class="col-lg-3">
-        <div class="card mb-3">
-          <div class="card-body">
-            <form>
-              <div class="form-group"> <label>Have coupon?</label>
-                <div class="input-group"> <input type="text" class="form-control coupon" name="" placeholder="Coupon code"> <span class="input-group-append"> <button class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+        <!-- /.col end-->
+      </div>
+      <!-- row end-->
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade active show" id="home" role="tabpanel">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {list-cart}
+                  </tbody>
+                </table>
               </div>
-            </form>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Speakers</th>
+                    <th scope="col">Session</th>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Venue</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Toni Duggan</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Harman Kardon</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box border-bottom-0">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Billal Hossain</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Speakers</th>
+                    <th scope="col">Session</th>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Venue</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Harman Kardon</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Billal Hossain</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box border-bottom-0">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Toni Duggan</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="sunday" role="tabpanel" aria-labelledby="sunday-tab">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Speakers</th>
+                    <th scope="col">Session</th>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Venue</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Toni Duggan</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Harman Kardon</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box border-bottom-0">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Billal Hossain</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="monday" role="tabpanel" aria-labelledby="monday-tab">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Speakers</th>
+                    <th scope="col">Session</th>
+                    <th scope="col">Venue</th>
+                    <th scope="col">Venue</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>16</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Harman Kardon</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>18</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Toni Duggan</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="inner-box border-bottom-0">
+                    <th scope="row">
+                      <div class="event-date">
+                        <span>20</span>
+                        <p>Novembar</p>
+                      </div>
+                    </th>
+                    <td>
+                      <div class="event-img">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" />
+                      </div>
+                    </td>
+                    <td>
+                      <div class="event-wrap">
+                        <h3><a href="#">Billal Hossain</a></h3>
+                        <div class="meta">
+                          <div class="organizers">
+                            <a href="#">Aslan Lingker</a>
+                          </div>
+                          <div class="categories">
+                            <a href="#">Inspire</a>
+                          </div>
+                          <div class="time">
+                            <span>05:35 AM - 08:00 AM 2h 25'</span>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="r-no">
+                        <span>Room B3</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="primary-btn">
+                        <a class="btn btn-primary" href="#">Read More</a>
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="primary-btn text-center">
+            <a href="/pay" class="btn btn-primary">Thanh toán</a>
           </div>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <dl class="dlist-align">
-              <dt>Total price:</dt>
-              <dd class="text-right ml-3">$69.97</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Discount:</dt>
-              <dd class="text-right text-danger ml-3">- $10.00</dd>
-            </dl>
-            <dl class="dlist-align">
-              <dt>Total:</dt>
-              <dd class="text-right text-dark b ml-3"><strong>$59.97</strong></dd>
-            </dl>
-            <hr> <a href="#" class="btn btn-out btn-primary btn-square btn-main" data-abc="true"> Make Purchase </a> <a href="#" class="btn btn-out btn-success btn-square btn-main mt-2" data-abc="true">Continue Shopping</a>
-          </div>
-        </div>
-      </aside>
+        <!-- /col end-->
+      </div>
+      <!-- /row end-->
     </div>
   </div>
 </div>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -121,5 +843,15 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+    <script>
+        $("#xoa-sanpham").click(function() {
+          let checked = $("table input:checked")
+          var arr = [];
+          checked.each(function () {
+            arr.push($(this).val());
+          });
+          console.log(arr)
+        })
+    </script>
 </body>
 </html>

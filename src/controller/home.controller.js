@@ -28,7 +28,7 @@ class HomeController{
                                         <h4 class="product-price">$${products.price}</h4>
                                         </div>
                                         <div>
-                                         <a href="/products?id=${products.id}"></a>
+                                         <a href="/products?id=${products.id}"><i class='bx bxs-cart-alt bx-tada text-black-50 bx-md'></i></a>
                                         </div>
                                     </div>
                                 </div>

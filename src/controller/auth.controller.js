@@ -181,6 +181,11 @@ class  AuthController{
                 email: dataForm.email,
                 password: dataForm.password
             }
+            let ssCart ={
+                email: sessionLogin.email,
+                cart:[]
+            }
+            let NewDataSSCart = JSON.stringify(ssCart)
             //ghi session vào file
             let nameFile = Date.now();
             let dataSession = JSON.stringify(sessionLogin);
@@ -191,11 +196,15 @@ class  AuthController{
                     password: dataForm.password,
                     sessionId: nameFile
                 }
+
                 const setCookie = cookie.serialize('user',JSON.stringify(dataCookie));
                 //gui cookie ve cho trinh duyet
                 res.setHeader('Set-Cookie',setCookie);
 
                 fs.writeFileSync('./session/' + nameFile + '.txt', dataSession);
+                if(!fs.existsSync('./token/' + dataCookie.email+'.txt')){
+                    fs.writeFileSync('./token/' + dataCookie.email + '.txt', NewDataSSCart);
+                }
                 res.setHeader('Cache-Control', 'no-store');
                 if(result[0].role === 'admin'){
                     console.log(1)
